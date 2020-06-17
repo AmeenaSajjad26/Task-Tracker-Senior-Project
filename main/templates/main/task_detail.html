@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+{% block content %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ object.taskuser }}</a>
+      <small class="text-muted">{{ object.duedate|date:"F d, Y" }}</small>
+      {% if object.taskuser == user%}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id%}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'task-delete' object.id%}">Delete</a>
+      </div>
+      {% endif %}
+    </div>
+    <h2 class="article-title">{{ object.taskname }}</h2>
+    <p class="article-content">{{ object.tasktype }}</p>
+  </div>
+</article>
+{% endblock content %}

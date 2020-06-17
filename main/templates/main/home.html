@@ -1,4 +1,18 @@
 {% extends "main/base.html" %}
 {% block content %}
 <h1>Welcome</h1>
+{% for task in tasks %}
+{% if task.taskuser == user%}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2">{{ task.taskuser }}</a>
+      <small class="text-muted">{{ task.duedate|date:"F d, Y" }}</small>
+    </div>
+    <h2><a class="article-title" href="{% url 'task-detail' task.id %}">{{ task.taskname }}</a></h2>
+    <p class="article-content">{{ task.tasktype }}</p>
+  </div>
+</article>
+{% endif %}
+{% endfor %}
 {% endblock content %}
