@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+{% block content %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ object.activityuser }}</a>
+      <small class="text-muted">{{ activity.repeat }}</small>
+      {% if object.activityuser == user%}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'activity-update' object.id%}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'activity-delete' object.id%}">Delete</a>
+      </div>
+      {% endif %}
+    </div>
+    <h2 class="article-title">{{ object.activityname }}</h2>
+    <p class="article-content">{{ object.starttime }}</p>
+    <p class="article-content">{{ object.endtime }}</p>
+  </div>
+</article>
+{% endblock content %}

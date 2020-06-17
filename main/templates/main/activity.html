@@ -1,0 +1,24 @@
+{% extends "main/base.html" %}
+{% block content %}
+<h1>Activity</h1>
+<main role="main" class="container">
+{% if user.is_authenticated %}
+              {% else %}
+              <h2>Please Login first!!</h2>
+              {% endif %}
+{% for activity in activitys %}
+{% if activity.activityuser == user%}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2">{{ activity.activityuser }}</a>
+      <small class="text-muted">{{ activity.repeat }}</small>
+    </div>
+    <h2><a class="article-title" href="{% url 'activity-detail' activity.id %}">{{ activity.activityname }}</a></h2>
+    <p class="article-content">{{ activity.starttime }}</p>
+    <p class="article-content">{{ activity.endtime }}</p>
+  </div>
+</article>
+{% endif %}
+{% endfor %}
+{% endblock content %}
