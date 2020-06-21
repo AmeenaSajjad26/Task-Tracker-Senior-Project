@@ -2,14 +2,18 @@
 {% block content %}
 <main role="main" class="container">
 {% if user.is_authenticated %}
-  <h1>My Task</h1>
-{% for task in tasks %}
+  <h1>Done Task</h1>
+  {% else %}
+  <h1>Welcome</h1>
+  <h2>Please Login first!!</h2>
+{% endif %}
+{% for task in donetasks %}
 {% if task.taskuser == user%}
-{% if task.status == "OnProgress"%}
+{% if task.status == "Done"%}
 <article class="media content-section">
   <div class="media-body">
     <div class="article-metadata">
-      <small class="bg-info">{{ task.status}}</small>
+      <small class="bg-success">{{ task.status}}</small>
       <small class="text-muted">Due: {{ task.duedate|date:"F d, Y" }}</small>
     </div>
     <h2><a class="article-title" href="{% url 'task-detail' task.id %}">{{ task.taskname }}</a></h2>
@@ -21,8 +25,4 @@
 {% endif %}
 {% endif %}
 {% endfor %}
-{% else %}
-  <h1>Welcome</h1>
-  <h2>Please Login first!!</h2>
-{% endif %}
 {% endblock content %}

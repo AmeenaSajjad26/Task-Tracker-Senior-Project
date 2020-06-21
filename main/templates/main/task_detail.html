@@ -3,17 +3,22 @@
 <article class="media content-section">
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="#">{{ object.taskuser }}</a>
+      {% if task.status == "Done"%}
+      <small class="bg-success">{{ object.status}}</small>
+        {%else%}
+        <small class="bg-info">{{ object.status}}</small>
+      {%endif%}
       <small class="text-muted">{{ object.duedate|date:"F d, Y" }}</small>
-      {% if object.taskuser == user%}
+    </div>
+    <h2 class="article-title">Task: {{ object.taskname }}</h2>
+    <p class="article-content">Type: {{ object.tasktype }}</p>
+    <p class="article-content">Spent time: {{ object.spenttime }}</p>
+  </div>
+</article>
+{% if object.taskuser == user%}
       <div>
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id%}">Update</a>
         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'task-delete' object.id%}">Delete</a>
       </div>
       {% endif %}
-    </div>
-    <h2 class="article-title">{{ object.taskname }}</h2>
-    <p class="article-content">{{ object.tasktype }}</p>
-  </div>
-</article>
 {% endblock content %}

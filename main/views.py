@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView,CreateView, UpdateView, DeleteView
-from .models import Task, Activity
+from django.http import HttpResponse
+from .models import Task, Activity, Schedule
 # Create your views here.
 def home(request):
     context = {
@@ -20,7 +21,7 @@ class TaskDetailView(DetailView):
 
 class TaskCreateView(LoginRequiredMixin,CreateView):
     model = Task
-    fields=['taskname','tasktype','duedate','estimatetime']
+    fields=['taskname','tasktype','duedate']
 
     def form_valid(self,form):
         form.instance.taskuser = self.request.user
@@ -28,7 +29,7 @@ class TaskCreateView(LoginRequiredMixin,CreateView):
 
 class TaskUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView,):
     model = Task
-    fields=['taskname','tasktype','duedate','estimatetime']
+    fields=['taskname','tasktype','duedate','spenttime','status']
 
     def form_valid(self,form):
         form.instance.taskuser = self.request.user
@@ -49,6 +50,20 @@ class TaskDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
         if self.request.user == task.taskuser:
             return True
         return False
+
+#DoneTask view
+def donetask(request):
+    context = {
+        'donetasks': Task.objects.all()
+    }
+    return render(request,'main/donetask.html',context)
+class DoneTaskListView(ListView):
+    model = Task
+    template_name='main/donetask.html'
+    context_object_name = 'donetasks'
+    ordering =['-duedate']
+
+
 #Activity
 def activity(request):
     context = {
@@ -95,3 +110,13 @@ class ActivityDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
         if self.request.user == activity.activityuser:
             return True
         return False
+
+#schedule
+def schedule(request):
+    context = {
+        'tasks': Task.objects.all(),
+        'activitys': Activity.objects.all(),
+        'range': [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 
+    }
+    return render(request, 'main/schedule.html', context)
+

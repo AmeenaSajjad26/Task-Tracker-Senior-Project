@@ -1,9 +1,11 @@
 from django.urls import path
 from .views import (TaskListView, TaskDetailView, TaskCreateView, TaskUpdateView,TaskDeleteView,
-ActivityListView, ActivityDetailView, ActivityCreateView, ActivityUpdateView, ActivityDeleteView)
+ActivityListView, ActivityDetailView, ActivityCreateView, ActivityUpdateView, ActivityDeleteView,
+DoneTaskListView)
 from . import views
 urlpatterns = [
     path('', TaskListView.as_view(),name='main-home'),
+    path('donetask/', DoneTaskListView.as_view(),name='main-donetask'),
     path('task/<int:pk>/', TaskDetailView.as_view(),name='task-detail'),
     path('task/new/', TaskCreateView.as_view(),name='task-create'),
     path('task/<int:pk>/update/', TaskUpdateView.as_view(),name='task-update'),
@@ -14,4 +16,5 @@ urlpatterns = [
     path('activity/new/', ActivityCreateView.as_view(),name='activity-create'),
     path('activity/<int:pk>/update/', ActivityUpdateView.as_view(),name='activity-update'),
     path('activity/<int:pk>/delete/', ActivityDeleteView.as_view(),name='activity-delete'),
+    path('schedule/', views.schedule,name='schedule'),
 ]
