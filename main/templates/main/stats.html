@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+{% block content %}
+<main role="main" class="container">
+{% if user.is_authenticated %}
+    <h2>Welcome back! {{ user.username }}</h2>
+{% else %}
+  <h1>Welcome</h1>
+  <h2>Please Login first!!</h2>
+{% endif %}
+{% endblock content %}
+</html>

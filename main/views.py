@@ -164,3 +164,5 @@ def schedule(request):
     }
     return render(request, 'main/schedule.html', context)
 
+def stats(request):
+    return render(request, 'main/stats.html')

@@ -3,7 +3,6 @@
 <article class="media content-section">
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="#">{{ object.activityuser }}</a>
       <small class="text-muted">{{ activity.repeat }}</small>
       {% if object.activityuser == user%}
       <div>
@@ -13,8 +12,8 @@
       {% endif %}
     </div>
     <h2 class="article-title">{{ object.activityname }}</h2>
-    <p class="article-content">{{ object.starttime }}</p>
-    <p class="article-content">{{ object.endtime }}</p>
+    <p class="article-content">start time: {{ object.starttime }}:00</p>
+    <p class="article-content">end time: {{ object.endtime }}:00</p>
   </div>
 </article>
 {% endblock content %}

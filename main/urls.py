@@ -4,7 +4,8 @@ ActivityListView, ActivityDetailView, ActivityCreateView, ActivityUpdateView, Ac
 DoneTaskListView)
 from . import views
 urlpatterns = [
-    path('', TaskListView.as_view(),name='main-home'),
+    path('', views.stats,name='main-stat'),
+    path('task/', TaskListView.as_view(),name='main-home'),
     path('donetask/', DoneTaskListView.as_view(),name='main-donetask'),
     path('task/<int:pk>/', TaskDetailView.as_view(),name='task-detail'),
     path('task/new/', TaskCreateView.as_view(),name='task-create'),
