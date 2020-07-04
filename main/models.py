@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
+from .managers import activitymanager
 from multiselectfield import MultiSelectField
 
 # Create your models here.
@@ -18,7 +19,7 @@ class Task(models.Model):
     taskname= models.CharField(max_length=100)
     tasktype= models.CharField(max_length=10,choices=MY_CHOICES)
     duedate= models.DateField(default=timezone.now)
-    spenttime= models.PositiveIntegerField(default=1)
+    spenttime= models.PositiveIntegerField(default=0)
     status= models.CharField(max_length=20,choices=STATUS_CHOICES,default="OnProgress")
     taskuser =models.ForeignKey(User, on_delete=models.CASCADE)
     objects = models.Manager()
@@ -28,9 +29,6 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse('task-detail',kwargs={'pk':self.pk})
-    
-    def get_status(self): 
-        return self.status
 
 class Activity(models.Model):
     MY_CHOICES = (
@@ -47,17 +45,10 @@ class Activity(models.Model):
     endtime= models.PositiveIntegerField()
     repeat = MultiSelectField(choices=MY_CHOICES)
     activityuser =models.ForeignKey(User, on_delete=models.CASCADE)
-    objects = models.Manager()
+    objects = activitymanager()
 
     def __str__(self):
         return self.activityname
 
     def get_absolute_url(self):
         return reverse('activity-detail',kwargs={'pk':self.pk})
-
-class Schedule(models.Model):
-    date = models.DateField()
-    timeslot = models.CharField(max_length=100)
-    eventname =models.CharField(max_length=100)
-    objects = models.Manager()
-

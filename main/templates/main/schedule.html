@@ -50,136 +50,78 @@
           <th>7pm</th>
         </tr>
         <tr>
-            {# texting #}
           <td>Mon</td>
-          {% for i in range %} 
-            {% for activity in activitys %}
-              {% if activity.activityuser == user%}
-                {% for a in activity.repeat %}
-                    {% if a == "Mon"%}
-                        {% if activity.starttime <= i and activity.endtime >= i %}
-                            <td>{{ activity.activityname }} </td>
-                        {%else%}
-                        <td></td>
-                        {% endif %}
-                     {% endif %}
-                 {% endfor %}
-              {% endif %} 
+            {% for activitys in Monschedule %}
+              {% for activity in activitys %}
+                <td>{{ activity.activityname }} </td>
+              {% empty %}
+                <td></td>
+              {% endfor %}
             {% endfor %} 
-          {% endfor %} 
         </tr>
         <tr>
           <td>Tue</td>
-          {% for i in range %} 
-            {% for activity in activitys %}
-              {% if activity.activityuser == user%}
-                {% for a in activity.repeat %}
-                    {% if a == "Tue"%}
-                        {% if activity.starttime <= i and activity.endtime >= i %}
-                            <td>{{ activity.activityname }} </td>
-                        {%else%}
-                        <td></td>
-                        {% endif %}
-                     {% endif %}
-                 {% endfor %}
-              {% endif %} 
-            {% endfor %} 
-          {% endfor %} 
+          {% for activitys in Tueschedule %}
+          {% for activity in activitys %}
+            <td>{{ activity.activityname }} </td>
+          {% empty %}
+            <td></td>
+          {% endfor %}
+        {% endfor %} 
         </tr>
         <tr>
           <td>Wed</td>
-          {% for i in range %} 
-            {% for activity in activitys %}
-              {% if activity.activityuser == user%}
-                {% for a in activity.repeat %}
-                    {% if a == "Wed"%}
-                        {% if activity.starttime <= i and activity.endtime >= i %}
-                            <td>{{ activity.activityname }} </td>
-                        {%else%}
-                        <td></td>
-                        {% endif %}
-                     {% endif %}
-                 {% endfor %}
-              {% endif %} 
-            {% endfor %} 
-          {% endfor %} 
+          {% for activitys in Wedschedule %}
+          {% for activity in activitys %}
+            <td>{{ activity.activityname }} </td>
+          {% empty %}
+            <td></td>
+          {% endfor %}
+        {% endfor %} 
         </tr>
         <tr>
             <td>Thu</td>
-            {% for i in range %} 
-            {% for activity in activitys %}
-              {% if activity.activityuser == user%}
-                {% for a in activity.repeat %}
-                    {% if a == "Thu"%}
-                        {% if activity.starttime <= i and activity.endtime >= i %}
-                            <td>{{ activity.activityname }} </td>
-                        {%else%}
-                        <td></td>
-                        {% endif %}
-                     {% endif %}
-                 {% endfor %}
-              {% endif %} 
+            {% for activitys in Thuschedule %}
+              {% for activity in activitys %}
+                <td>{{ activity.activityname }} </td>
+              {% empty %}
+                <td></td>
+              {% endfor %}
             {% endfor %} 
-          {% endfor %} 
           </tr>
         <tr>
             <td>Fri</td>
-            {% for i in range %} 
-            {% for activity in activitys %}
-              {% if activity.activityuser == user%}
-                {% for a in activity.repeat %}
-                    {% if a == "Fri"%}
-                        {% if activity.starttime <= i and activity.endtime >= i %}
-                            <td>{{ activity.activityname }} </td>
-                        {%else%}
-                        <td></td>
-                        {% endif %}
-                     {% endif %}
-                 {% endfor %}
-              {% endif %} 
+            {% for activitys in Frischedule %}
+              {% for activity in activitys %}
+                <td>{{ activity.activityname }} </td>
+              {% empty %}
+                <td></td>
+              {% endfor %}
             {% endfor %} 
-          {% endfor %} 
           </tr>
         <tr>
             <td>Sat</td>
-            {% for i in range %} 
-            {% for activity in activitys %}
-              {% if activity.activityuser == user%}
-                {% for a in activity.repeat %}
-                    {% if a == "Sat"%}
-                        {% if activity.starttime <= i and activity.endtime >= i %}
-                            <td>{{ activity.activityname }} </td>
-                        {%else%}
-                        <td></td>
-                        {% endif %}
-                     {% endif %}
-                 {% endfor %}
-              {% endif %} 
+            {% for activitys in Satschedule %}
+              {% for activity in activitys %}
+                <td>{{ activity.activityname }} </td>
+              {% empty %}
+                <td></td>
+              {% endfor %}
             {% endfor %} 
-          {% endfor %} 
           </tr>
           <tr>
             <td>Sun</td>
-            {% for i in range %}
+            {% for activitys in Sunschedule %}
               {% for activity in activitys %}
-                {% if activity.activityuser == user%}
-                    {% if "Sun" in activity.repeat %}
-                          {% if activity.starttime <= i and activity.endtime >= i %}
-                             <td>{{ activity.activityname }} </td>
-                          {%else%}
-                          <td></td>
-                          {% endif %}
-                    {% endif %} 
-                {% endif %} 
+                <td>{{ activity.activityname }} </td>
+              {% empty %}
+                <td></td>
+              {% endfor %}
             {% endfor %} 
-          {% endfor %} 
           </tr>
       </table>
   </div>
 </article>
-  {% if "Sun" not in activitys.repeat %}
-    <h3>yes</h3>
-  {% endif %} 
 {% else %}
   <h1>Welcome</h1>
   <h2>Please Login first!!</h2>

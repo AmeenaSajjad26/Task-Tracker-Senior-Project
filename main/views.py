@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView,CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
-from .models import Task, Activity, Schedule
+from .models import Task, Activity
 # Create your views here.
 def home(request):
     context = {
@@ -18,7 +18,6 @@ class TaskListView(ListView):
 
 class TaskDetailView(DetailView):
     model = Task
-
 class TaskCreateView(LoginRequiredMixin,CreateView):
     model = Task
     fields=['taskname','tasktype','duedate']
@@ -113,10 +112,55 @@ class ActivityDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
 
 #schedule
 def schedule(request):
+    user_activitys = Activity.objects.get_users_activity(request.user)
+    Monschedule=[]
+    for x in range(7,20):
+        {
+            Monschedule.append(Activity.objects.check_activity_time('Mon',x,request.user))
+        }
+    Tueschedule=[]
+    for x in range(7,20):
+        {
+            Tueschedule.append(Activity.objects.check_activity_time('Tue',x,request.user))
+        }
+    Wedschedule=[]
+    for x in range(7,20):
+        {
+            Wedschedule.append(Activity.objects.check_activity_time('Wed',x,request.user))
+        }
+    Thuschedule=[]
+    for x in range(7,20):
+        {
+            Thuschedule.append(Activity.objects.check_activity_time('Thu',x,request.user))
+        }
+    
+    Frischedule=[]
+    for x in range(7,20):
+        {
+            Frischedule.append(Activity.objects.check_activity_time('Fri',x,request.user))
+        }
+    Satschedule=[]
+    for x in range(7,20):
+        {
+            Satschedule.append(Activity.objects.check_activity_time('Sat',x,request.user))
+        }
+    Sunschedule=[]
+    for x in range(7,20):
+        {
+            Sunschedule.append(Activity.objects.check_activity_time('Sun',x,request.user))
+        }
     context = {
         'tasks': Task.objects.all(),
         'activitys': Activity.objects.all(),
-        'range': [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 
+        'user_activitys':user_activitys,
+        'range': [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+        'Monschedule': Monschedule,
+        'Tueschedule': Tueschedule, 
+        'Wedschedule': Wedschedule, 
+        'Thuschedule': Thuschedule, 
+        'Frischedule': Frischedule, 
+        'Satschedule': Satschedule, 
+        'Sunschedule': Sunschedule, 
     }
     return render(request, 'main/schedule.html', context)
 
