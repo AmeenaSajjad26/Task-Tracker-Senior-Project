@@ -28,7 +28,7 @@ class TaskCreateView(LoginRequiredMixin,CreateView):
 
 class TaskUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView,):
     model = Task
-    fields=['taskname','tasktype','duedate','spenttime','status']
+    fields=['taskname','tasktype','duedate','spenthour','spentmin','status']
 
     def form_valid(self,form):
         form.instance.taskuser = self.request.user
@@ -165,4 +165,19 @@ def schedule(request):
     return render(request, 'main/schedule.html', context)
 
 def stats(request):
-    return render(request, 'main/stats.html')
+    ontimetaskS = Task.objects.filter(status='Done',tasktype='Small',spenthour__lte=3,taskuser__username=request.user).count()
+    ontimetaskM = Task.objects.filter(status='Done',tasktype='Middle',spenthour__lte=6,taskuser__username=request.user).count()
+    ontimetaskL = Task.objects.filter(status='Done',tasktype='Large',spenthour__lte=12,taskuser__username=request.user).count()
+    Sumontimetask =ontimetaskS+ontimetaskM+ontimetaskL
+    accuracyontime = Sumontimetask/Task.objects.filter(status='Done',taskuser__username=request.user).count()
+    context = {
+        'totaltasks': Task.objects.filter(taskuser__username=request.user).count(),
+        'totaldonetasks': Task.objects.filter(status='Done',taskuser__username=request.user).count(),
+        'totalonprogresstask': Task.objects.filter(status='OnProgress',taskuser__username=request.user).count(),
+        'ontimetaskS': ontimetaskS,
+        'ontimetaskM': ontimetaskM,
+        'ontimetaskL': ontimetaskL,
+        'Sumontimetask': Sumontimetask,
+        'accuracyontime': accuracyontime,
+    }
+    return render(request, 'main/stats.html', context)

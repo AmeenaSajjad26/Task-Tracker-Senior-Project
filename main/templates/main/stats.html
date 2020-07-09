@@ -3,6 +3,14 @@
 <main role="main" class="container">
 {% if user.is_authenticated %}
     <h2>Welcome back! {{ user.username }}</h2>
+    <p>On time accuary: {{accuracyontime}}</p>
+    <p>Total tasks: {{totaltasks}}</p>
+    <p>Done tasks: {{totaldonetasks}}</p>
+    <p>On Progress tasks: {{totalonprogresstask}}</p>
+    <p>Small tasks that finish on time: {{ontimetaskS}}</p>
+    <p>Middle tasks that finish on time: {{ontimetaskM}}</p>
+    <p>Large tasks that finish on time: {{ontimetaskL}}</p>
+    <p>Sum of On time task: {{Sumontimetask}}</p>
 {% else %}
   <h1>Welcome</h1>
   <h2>Please Login first!!</h2>

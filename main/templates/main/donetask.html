@@ -18,7 +18,7 @@
     </div>
     <h2><a class="article-title" href="{% url 'task-detail' task.id %}">{{ task.taskname }}</a></h2>
     <p class="article-content">Type: {{ task.tasktype }}</p>
-    <p class="article-content">Spent Time: {{ task.spenttime }} hrs</p>
+    <p class="article-content">Spent Time:{{ task.spenthour }}hr {{ task.spentmin }}min</p>
   </div>
   <a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'task-update' task.id%}">Update Progress</a>
 </article>
