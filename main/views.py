@@ -169,7 +169,11 @@ def stats(request):
     ontimetaskM = Task.objects.filter(status='Done',tasktype='Middle',spenthour__lte=6,taskuser__username=request.user).count()
     ontimetaskL = Task.objects.filter(status='Done',tasktype='Large',spenthour__lte=12,taskuser__username=request.user).count()
     Sumontimetask =ontimetaskS+ontimetaskM+ontimetaskL
-    accuracyontime = Sumontimetask/Task.objects.filter(status='Done',taskuser__username=request.user).count()
+    if(Task.objects.filter(status='Done',taskuser__username=request.user).count()==0):
+        accuracyontime = 0
+    else:
+        accuracyontime = Sumontimetask/Task.objects.filter(status='Done',taskuser__username=request.user).count()
+    
     context = {
         'totaltasks': Task.objects.filter(taskuser__username=request.user).count(),
         'totaldonetasks': Task.objects.filter(status='Done',taskuser__username=request.user).count(),
