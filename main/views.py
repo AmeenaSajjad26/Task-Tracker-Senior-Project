@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView,CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
 from .models import Task, Activity
+import datetime
 # Create your views here.
 def home(request):
     context = {
@@ -32,6 +33,10 @@ class TaskUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView,):
 
     def form_valid(self,form):
         form.instance.taskuser = self.request.user
+        form.instance.donedate = datetime.datetime.now()
+        task = self.get_object()
+        if task.duedate < datetime.datetime.now().date():
+            form.instance.ontime_late = "Late"
         return super().form_valid(form)
     
     def test_func(self):
@@ -165,19 +170,35 @@ def schedule(request):
     return render(request, 'main/schedule.html', context)
 
 def stats(request):
-    ontimetaskS = Task.objects.filter(status='Done',tasktype='Small',spenthour__lte=3,taskuser__username=request.user).count()
-    ontimetaskM = Task.objects.filter(status='Done',tasktype='Middle',spenthour__lte=6,taskuser__username=request.user).count()
-    ontimetaskL = Task.objects.filter(status='Done',tasktype='Large',spenthour__lte=12,taskuser__username=request.user).count()
+    #app spent time:
+    appsptimetaskS = Task.objects.filter(status='Done',tasktype='Small',spenthour__lte=3,taskuser__username=request.user).count()
+    appsptimetaskM = Task.objects.filter(status='Done',tasktype='Middle',spenthour__lte=6,taskuser__username=request.user).count()
+    appsptimetaskL = Task.objects.filter(status='Done',tasktype='Large',spenthour__lte=12,taskuser__username=request.user).count()
+    Sumappsptimetask =appsptimetaskS+appsptimetaskM+appsptimetaskL
+    if(Task.objects.filter(status='Done',taskuser__username=request.user).count()==0):
+        accuracyappsptime = 0
+    else:
+        accuracyappsptime = Sumappsptimetask/Task.objects.filter(status='Done',taskuser__username=request.user).count()
+    #on time:
+    ontimetaskS = Task.objects.filter(status='Done',tasktype='Small',ontime_late='Ontime',taskuser__username=request.user).count()
+    ontimetaskM = Task.objects.filter(status='Done',tasktype='Middle',ontime_late='Ontime',taskuser__username=request.user).count()
+    ontimetaskL = Task.objects.filter(status='Done',tasktype='Large',ontime_late='Ontime',taskuser__username=request.user).count()
     Sumontimetask =ontimetaskS+ontimetaskM+ontimetaskL
     if(Task.objects.filter(status='Done',taskuser__username=request.user).count()==0):
         accuracyontime = 0
     else:
         accuracyontime = Sumontimetask/Task.objects.filter(status='Done',taskuser__username=request.user).count()
-    
+
     context = {
         'totaltasks': Task.objects.filter(taskuser__username=request.user).count(),
         'totaldonetasks': Task.objects.filter(status='Done',taskuser__username=request.user).count(),
         'totalonprogresstask': Task.objects.filter(status='OnProgress',taskuser__username=request.user).count(),
+        'appsptimetaskS': appsptimetaskS,
+        'appsptimetaskM': appsptimetaskM,
+        'appsptimetaskL': appsptimetaskL,
+        'Sumappsptimetask': Sumappsptimetask,
+        'accuracyappsptime': accuracyappsptime,
+        #on time
         'ontimetaskS': ontimetaskS,
         'ontimetaskM': ontimetaskM,
         'ontimetaskL': ontimetaskL,

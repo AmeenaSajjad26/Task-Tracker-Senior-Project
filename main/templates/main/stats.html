@@ -1,19 +1,57 @@
-{% extends "main/base.html" %}
-{% block content %}
-<main role="main" class="container">
-{% if user.is_authenticated %}
-    <h2>Welcome back! {{ user.username }}</h2>
-    <p>On time accuary: {{accuracyontime}}</p>
-    <p>Total tasks: {{totaltasks}}</p>
-    <p>Done tasks: {{totaldonetasks}}</p>
-    <p>On Progress tasks: {{totalonprogresstask}}</p>
-    <p>Small tasks that finish on time: {{ontimetaskS}}</p>
-    <p>Middle tasks that finish on time: {{ontimetaskM}}</p>
-    <p>Large tasks that finish on time: {{ontimetaskL}}</p>
-    <p>Sum of On time task: {{Sumontimetask}}</p>
-{% else %}
-  <h1>Welcome</h1>
-  <h2>Please Login first!!</h2>
-{% endif %}
-{% endblock content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    {% extends "main/base.html" %}
+    {% block content %} 
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/stats.css' %}">
+    <style>
+
+    </style>
+  </head>
+  <body>
+      {% if user.is_authenticated %}
+          <h1>Welcome back! {{ user.username }}</h1>
+          <div class="container"id="gridlist">
+            <div class="row">
+              <div class="col-md">
+                Total tasks: {{totaltasks}}
+              </div>
+              <div class="col-md">
+                <p class="text-success">Done tasks: {{totaldonetasks}}</p>
+              </div>
+              <div class="col-md">
+                <p class="text-primary">OnProgress tasks: {{totalonprogresstask}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md">
+                OnTime accuracy: {{accuracyontime}}
+              </div>
+              <div class="col-md">
+                appropriate Spenttime accuary: {{accuracyappsptime}}
+              </div>
+            </div>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">Small tasks with appropriate spent time: {{appsptimetaskS}}</li>
+            <li class="list-group-item">Middle tasks with appropriate spent time: {{appsptimetaskM}}</li>
+            <li class="list-group-item">Large tasks with appropriate spent time: {{appsptimetaskL}}</li>
+            <li class="list-group-item">Sum of appropriate spent time tasks: {{Sumappsptimetask}}</li>
+            <li class="list-group-item">Small tasks with on time: {{ontimetaskS}}</li>
+            <li class="list-group-item">Middle tasks with on time: {{ontimetaskM}}</li>
+            <li class="list-group-item">Large tasks with on time: {{ontimetaskL}}</li>
+            <li class="list-group-item">Sum of on time tasks: {{Sumontimetask}}</li>
+           </ul>
+      {% else %}
+        <h1>Welcome</h1>
+        <h2>Please Login first!!</h2>
+      {% endif %}
+      {% endblock content %}
 </html>

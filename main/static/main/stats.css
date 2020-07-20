@@ -1,0 +1,14 @@
+body {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 5rem;
+  }
+#gridlist {
+    font-size: 30px;
+    background: #3d3d3d;
+    color: #ffffff;
+  }
+.col-md{
+    border-style: solid;
+    border-color: rgb(45, 98, 141);
+}

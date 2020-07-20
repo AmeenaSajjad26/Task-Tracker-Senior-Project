@@ -24,6 +24,8 @@ class Task(models.Model):
     spentmin= models.PositiveIntegerField(default=0,validators=[MinValueValidator(0), MaxValueValidator(60)])
     status= models.CharField(max_length=20,choices=STATUS_CHOICES,default="OnProgress")
     taskuser =models.ForeignKey(User, on_delete=models.CASCADE)
+    donedate= models.DateField(null=True)
+    ontime_late=models.CharField(max_length=100,default="Ontime")
     objects = models.Manager()
 
     def __str__(self):
@@ -32,6 +34,10 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse('task-detail',kwargs={'pk':self.pk})
 
+    def check_ontime(self):
+        if(self.duedate<=self.donedate or self.donedate is None):
+            return True
+        return False
 class Activity(models.Model):
     MY_CHOICES = (
         ('Mon', 'Monday'),
@@ -54,3 +60,4 @@ class Activity(models.Model):
 
     def get_absolute_url(self):
         return reverse('activity-detail',kwargs={'pk':self.pk})
+        

@@ -13,6 +13,9 @@
     <h2 class="article-title">Task: {{ object.taskname }}</h2>
     <p class="article-content">Type: {{ object.tasktype }}</p>
     <p class="article-content">Spent time: {{ object.spenthour }}hr {{ object.spentmin }} min</p>
+    {% if task.status == "Done"%}
+      <p class="article-content">Done date: {{ object.donedate }}</p>
+    {%endif%}
   </div>
 </article>
 {% if object.taskuser == user%}
