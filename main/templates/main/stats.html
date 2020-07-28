@@ -32,10 +32,10 @@
             </div>
             <div class="row">
               <div class="col-md">
-                OnTime accuracy: {{accuracyontime}}
+                OnTime accuracy: {{accuracyontime|floatformat:"2"}}
               </div>
               <div class="col-md">
-                appropriate Spenttime accuary: {{accuracyappsptime}}
+                appropriate Spenttime accuary: {{accuracyappsptime|floatformat:"2"}}
               </div>
             </div>
           </div>
@@ -49,6 +49,7 @@
             <li class="list-group-item">Large tasks with on time: {{ontimetaskL}}</li>
             <li class="list-group-item">Sum of on time tasks: {{Sumontimetask}}</li>
            </ul>
+           <img src="{% static 'main/images.jfif'%}">
       {% else %}
         <h1>Welcome</h1>
         <h2>Please Login first!!</h2>
