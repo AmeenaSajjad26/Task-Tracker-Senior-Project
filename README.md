@@ -13,6 +13,6 @@ Installation\
 Before running the project make sure you have python installed. After installing python you need to download django and install its packages. \
 Make sure to install the additional django packet by using these command: \
 pip install django-multiselectfield \
-pip install django-crispy-forms \
+pip install django-crispy-forms 
  
-Then run the displayed http command to a web browser.\
+Then run the displayed http command to a web browser.
